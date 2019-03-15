@@ -33,10 +33,9 @@ export class AuthenticationService {
     }
 
     checkAccess() {
-            return this.http.get<any>(`/resource`).pipe(map(user => {
-                                                                   // login successful if there's a user in the response
-                                                                    console.log(user);
-                                                                   return user;
-                                                               }));;
+            return this.http.get<any>(`/resource`).pipe(map(response => {
+                                                                   console.log(response);
+                                                                   return response;
+                                                               }));
     }
 }

@@ -2,14 +2,16 @@
 import { first } from 'rxjs/operators';
 
 import { User } from '../_models';
-import { AuthenticationService } from '../_services';
+import { RestService, AuthenticationService } from '../_services';
 
 @Component({templateUrl: 'home.component.html'})
 export class HomeComponent implements OnInit {
     currentUser: User;
+    getMessage = '';
+    postMessage = '';
 
 
-    constructor(private authenticationService : AuthenticationService) {
+    constructor(private authenticationService : AuthenticationService, private restService: RestService) {
         this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     }
 
@@ -18,8 +20,16 @@ export class HomeComponent implements OnInit {
     }
 
     private checkAccess() {
-        this.authenticationService.checkAccess().pipe(first()).subscribe(users => {
-
-        });
+        this.authenticationService.checkAccess().pipe(first()).subscribe(users => {});
     }
+
+    onClickGet() {
+        this.restService.get().pipe(first()).subscribe(response => {this.getMessage = JSON.stringify(response);});
+    }
+
+    onClickPost() {
+        this.restService.post(this.currentUser.firstName).pipe(first()).subscribe(response => {this.postMessage = JSON.stringify(response);});
+    }
+
+
 }
