@@ -13,7 +13,7 @@ export class RestService {
     }
 
     post(userName:string) {
-        return this.http.post<any>(`/resource`, userName).pipe(map(response => {
+        return this.http.post<string>(`/resource`, userName).pipe(map(response => {
                                                                         return response;
                                                                     }));
     }
